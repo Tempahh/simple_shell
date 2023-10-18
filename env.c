@@ -30,6 +30,6 @@ char *resolvePath(char *command, char **pathdirs)
 
 		free(fullpath);
 	}
-
+	free(fullpath);
 	return (NULL);
 }
