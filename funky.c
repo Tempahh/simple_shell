@@ -94,7 +94,7 @@ int main(int ac, char **av)
 		fflush(stdout);
 
 
-		characters_read = getline(&line, &len, stdin);
+		characters_read = cus_getline(&line, &len, stdin);
 
 		if (characters_read == EOF)
 		{

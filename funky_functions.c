@@ -10,109 +10,43 @@ void signal_handler(int signal)
 	write(1, "$ ", strlen("$ "));
 	fflush(stdout);
 }
-
-/**
-* get_user_input - displays a prompt and gets user input
-* Return: returns the input
+/*
+* cus_getline- custom getline function
+* @line: line buffer
+* @len: length of buffer
+* @stream: stream to read from
+* Return: number of characters read or -1 if fail
 */
-char *get_user_input()
+ssize_t cus_getline(char **line, size_t *len, FILE *stream)
 {
-	char *input = NULL;
+	char *readline;
 
-	size_t len = 0;
-	ssize_t characters_read = 0;
+	ssize_t read;
 
-	if (isatty(STDIN_FILENO))
+	if (*line == NULL || *len == 0)
 	{
-		write(STDOUT_FILENO, "$ ", 2);
-		fflush(stdout);
-	}
-
-	characters_read = getline(&input, &len, stdin);
-
-	if (characters_read == EOF)
-	{
-		free(input);
-		return (NULL);
-	}
-	else if (characters_read == -1)
-	{
-		free(input);
-		return (NULL);
-	}
-
-	if (input[characters_read - 1] == '\n')
-	{
-		input[characters_read - 1] = '\0';
-	}
-
-	return (input);
-}
-
-/**
-* tokenize_input - breaks the users input into tokens
-* @input: the user input to be tokenized
-* Return: returns input
-*/
-char **tokenize_input(char *input)
-{
-
-	char **tokens = (char **)malloc(sizeof(char *) * 100);
-
-	char *token;
-
-	int i = 0;
-
-	int tokenCount = 0;
-
-	if (!tokens)
-	{
-		perror("malloc");
-		return (NULL);
-	}
-
-	token = strtok(input, " ");
-
-	while (token != NULL)
-	{
-		tokens[tokenCount] = strdup(token);
-		if (!tokens[tokenCount])
+		*len = 1024;
+		*line = malloc(*len);
+		if (*line == NULL)
 		{
-			perror("strdup");
-			for (i = 0; i < tokenCount; i++)
-			{
-
-				free(tokens[i]);
-			}
-			free(tokens);
-			return (NULL);
+			return (-1);
 		}
-
-		token = strtok(NULL, " ");
-		tokenCount++;
 	}
 
-	tokens[tokenCount] = NULL;
-	return (tokens);
-}
-
-/**
-* is_path_command - checks if the command is an external command
-* @command: the command to be checked
-* Return: returns 0 at compeletion
-*/
-int is_path_command(char *command)
-{
-
-	int sl_i = 0;
-
-	while (command[sl_i] != '\0')
+	readline = fgets(*line, *len, stream);
+	if (readline != NULL)
 	{
-		if (command[sl_i] == '/')
+		read = strlen(*line);
+
+		if (read > 0 && (*line)[read - 1] == '\n')
 		{
-			return (1);
+			(*line)[read - 1] = '\0';
+			read--;
 		}
-		sl_i++;
+		return (read);
 	}
-	return (0);
+	else
+	{
+		return (-1);
+	}
 }

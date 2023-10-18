@@ -14,4 +14,6 @@ extern char **environ;
 
 void signal_handler(int signal);
 
+ssize_t cus_getline(char **line, size_t *len, FILE *stream);
+
 #endif
