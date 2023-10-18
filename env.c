@@ -1,5 +1,10 @@
 #include "shell.h"
-
+/**
+ * *resolvePath - function to turn the path into an executable directory
+ * @command: command passed from the keyboard
+ * @pathdirs: unresolved path environment
+ * Return: returns null at completion
+*/
 char *resolvePath(char *command, char **pathdirs)
 {
 	char *fullpath = NULL;
@@ -28,4 +33,3 @@ char *resolvePath(char *command, char **pathdirs)
 
 	return (NULL);
 }
-

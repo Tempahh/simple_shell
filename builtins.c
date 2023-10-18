@@ -1,5 +1,8 @@
 #include "shell.h"
-
+/**
+ * exit_bin - function to handle exiting the shell builtins
+ * @args: possible arguments
+*/
 void exit_bin(char **args)
 {
 	int status = 0;
@@ -14,7 +17,10 @@ void exit_bin(char **args)
 		exit(0);
 	}
 }
-
+/**
+ * print_env - function to hold and print the shell environment
+ * @args: possible arguments
+*/
 void print_env(char **args)
 {
 	char **env = environ, *envVar, *equalsSign;
@@ -42,7 +48,10 @@ void print_env(char **args)
 		env++;
 	}
 }
-
+/**
+ * my_setenv - function to set environment
+ * @args: possible trailing arguments
+*/
 void my_setenv(char **args)
 {
 	if (args[1] == NULL || args[2] == NULL || args[3] != NULL)
@@ -55,7 +64,10 @@ void my_setenv(char **args)
 		perror("setenv");
 	}
 }
-
+/**
+ * my_unsetenv - function to unset environment
+ * @args: possible trailing arguments
+*/
 void my_unsetenv(char **args)
 {
 	if (args[1] == NULL || args[2] != NULL)
@@ -68,7 +80,10 @@ void my_unsetenv(char **args)
 		perror("unsetenv");
 	}
 }
-
+/**
+ * change_dir - function to handle changing directory
+ * @args: possible trailing arguments
+*/
 void change_dir(char **args)
 {
 	char *home = getenv("HOME");

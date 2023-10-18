@@ -1,5 +1,8 @@
 #include "shell.h"
-
+/**
+ * main - Entry point of the shell
+ * return: return 0 on completion
+*/
 int main()
 {
 	char *myCommand = NULL;
