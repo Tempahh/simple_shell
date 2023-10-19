@@ -44,7 +44,7 @@ int main(int ac, char **av)
 	size_t max_command_allowed = 0;
 
 	int running_pid = 0;
-	int status = 0;
+	int status = 0, exit_status;
 
 	char *path_environment_variable = NULL;
 
@@ -108,8 +108,17 @@ int main(int ac, char **av)
 		if (strcmp(line, "exit") == 0)
 		{
 			free(line);
-			exit(0);
+			exit(2);
 		}
+        else if (strncmp(line, "exit ", 5) == 0)
+        {
+            exit_status = atoi(line + 5);
+            if (exit_status != 0)
+            {
+                exit(exit_status);
+            }
+        }
+
 
 		if (strcmp(line, "env") == 0)
 		{
